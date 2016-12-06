@@ -1,0 +1,5 @@
+Coding Dojo Chat System Assignment
+
+https://github.com/DenverRenGuy/mean_chat
+
+Run NPM install for dependencies

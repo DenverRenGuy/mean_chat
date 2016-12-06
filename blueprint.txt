@@ -1,0 +1,6 @@
+1. Server has to initialize, load modules including socket.io and begin listening for socket connections as well as web requests.
+2.  System has to render a index page, index page will prompt user for name.  (Utilize javascript prompt)
+3. after person puts in a valid name, page should display all active socket connection users.  Server should update all other
+ users with the additional information from the new user
+4.  An entered message should be passed over the open socket to the server via an emit.  The server should broadcast all back to all clients.
+5.  If a client leaves the page the server should update all clients that have sockets open and the user should be removed.

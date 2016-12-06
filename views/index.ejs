@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Group Chat assignment | Coding Dojo</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="site.css" media="screen" title="no title">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript" src='/socket.io/socket.io.js'></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Coding Dojo Assignment, Group Chat Conversation Board</h1>
+            <textarea class="chat-box">
+
+            </textarea>
+            <input type="text" id="new_message" name="message" placeholder="Enter a message..." value="">
+            <button type="button" id="send" name="button">Send</button>
+        </div>
+
+
+
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                var socket;
+                var user = window.prompt("Group Chat Access", 'Please Enter your name to access group chat');
+
+                console.log(user);
+                if (user != null){
+                    socket = io.connect();
+                    socket.emit('new_user', user);
+                }
+                else {
+                    window.alert('Error in parsing name, object does not exist.');
+                }
+
+                // Socket Server functions
+                socket.on('welcome_user', function(messages){
+                        console.log(messages);
+                        for (var i = 0; i < messages.length; i++){
+                            $('.chat-box').append(messages[i] + '\n');
+                        }
+                });
+
+                socket.on('update_chat', function(message){
+                    $('.chat-box').append(message + '\n');
+                    console.log(message);
+                })
+
+                $('#send').click(function(){
+                    socket.emit('send_message', document.getElementById('new_message').value);
+                    $('#new_message').val('');
+                })
+
+
+
+
+
+
+
+                // function addChatBox(id, value){
+                //     var holder = document.getElementsByClassName('chat-box-holder');
+                //     newBox = document.createElement('div');
+                //     newBox.id = id;
+                //     newBox.className = 'chat-box';
+                //     $('.chat-box-holder').append(newBox);
+                // }
+
+
+        })
+    </script>
